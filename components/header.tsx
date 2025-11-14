@@ -88,9 +88,9 @@ export default function Header() {
               </motion.a>
             ))}
             <div className="flex gap-2 pt-4">
-              <Button variant="outline" className="flex-1 bg-transparent">
+              {/* <Button variant="outline" className="flex-1 bg-transparent">
                 Sign In
-              </Button>
+              </Button> */}
               <Button className="flex-1 bg-blue-600">Get Started</Button>
             </div>
           </div>
