@@ -49,9 +49,9 @@ export default function Header() {
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-4">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent">
+              {/* <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent">
                 Sign In
-              </Button>
+              </Button> */}
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button className="bg-blue-600 hover:bg-blue-700 text-white">Get Started</Button>
