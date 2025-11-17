@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { motion, Variants } from "framer-motion"
+import Image from "next/image"
+
 
 export default function Hero() {
   const containerVariants: Variants = {
@@ -96,7 +98,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Hero Image Placeholder */}
+       {/* Hero Image Placeholder */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -109,26 +111,11 @@ export default function Hero() {
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
             >
-              <div className="bg-white rounded-xl p-4 shadow-lg">
-                <div className="bg-gray-100 h-64 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <svg
-                      className="w-24 h-24 mx-auto mb-4 text-blue-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9.75 17L9 20m0 0l-.75 3M9 20H5m4 0h10m0 0l.75 3M19 20l-.75-3m0 0V9a2 2 0 00-2-2H7a2 2 0 00-2 2v11m0 0l-.75 3M17 20l.75 3"
-                      />
-                    </svg>
-                    <p className="text-gray-500">Website Preview</p>
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="/hero-website-preview-img.png" 
+                alt="Professional website mockup showcasing BrandLift Technologies dashboard interface"
+                className="bg-white rounded-xl shadow-lg w-full h-auto"
+              />
             </motion.div>
           </motion.div>
         </div>
