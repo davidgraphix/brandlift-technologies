@@ -1,12 +1,13 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Menu, X } from "lucide-react"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <motion.header
@@ -22,28 +23,31 @@ export default function Header() {
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
-            <motion.div
-              className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center"
-              whileHover={{ rotate: 10 }}
-            >
-              <span className="text-white font-bold text-lg">B</span>
-            </motion.div>
-            <span className="font-bold text-lg text-gray-900">BrandLift</span>
+            <Image
+              src="/brandlift-logo.png.png"
+              alt="BrandLift Logo"
+              width={150}
+              height={150}
+              className="object-contain"
+              priority
+            />
           </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {["Home", "About", "Services", "Pricing", "Contact"].map((item, index) => (
-              <motion.a
-                key={index}
-                href={`#${item.toLowerCase()}`}
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {item}
-              </motion.a>
-            ))}
+            {["Home", "About", "Services", "Pricing", "Portfolio", "Contact"].map(
+              (item, index) => (
+                <motion.a
+                  key={index}
+                  href={`#${item.toLowerCase()}`}
+                  className="text-gray-700 hover:text-blue-600 transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {item}
+                </motion.a>
+              )
+            )}
           </div>
 
           {/* Desktop Buttons */}
@@ -54,7 +58,9 @@ export default function Header() {
               </Button> */}
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">Get Started</Button>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                Get Started
+              </Button>
             </motion.div>
           </div>
 
@@ -72,21 +78,25 @@ export default function Header() {
         {/* Mobile Navigation */}
         <motion.div
           initial={false}
-          animate={isOpen ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
+          animate={
+            isOpen ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }
+          }
           transition={{ duration: 0.3 }}
           className="md:hidden overflow-hidden"
         >
           <div className="pt-4 pb-4 space-y-4 border-t border-blue-100 mt-4">
-            {["Home", "About", "Services", "Pricing", "Contact"].map((item, index) => (
-              <motion.a
-                key={index}
-                href={`#${item.toLowerCase()}`}
-                className="block text-gray-700 hover:text-blue-600"
-                whileHover={{ x: 5 }}
-              >
-                {item}
-              </motion.a>
-            ))}
+            {["Home", "About", "Services", "Pricing", "Contact"].map(
+              (item, index) => (
+                <motion.a
+                  key={index}
+                  href={`#${item.toLowerCase()}`}
+                  className="block text-gray-700 hover:text-blue-600"
+                  whileHover={{ x: 5 }}
+                >
+                  {item}
+                </motion.a>
+              )
+            )}
             <div className="flex gap-2 pt-4">
               {/* <Button variant="outline" className="flex-1 bg-transparent">
                 Sign In
@@ -97,5 +107,5 @@ export default function Header() {
         </motion.div>
       </nav>
     </motion.header>
-  )
+  );
 }

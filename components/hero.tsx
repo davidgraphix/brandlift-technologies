@@ -111,10 +111,12 @@ export default function Hero() {
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
             >
-              <img 
-                src="/hero-website-preview-img.png" 
+             <Image
+                src="/hero-website-preview-img.png"
                 alt="Professional website mockup showcasing BrandLift Technologies dashboard interface"
-                className="bg-white rounded-xl shadow-lg w-full h-auto"
+                width={500}
+                height={500}
+                className="w-full h-auto rounded-xl shadow-lg object-cover"
               />
             </motion.div>
           </motion.div>
