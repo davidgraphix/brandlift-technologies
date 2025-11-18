@@ -1,14 +1,15 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Check } from "lucide-react"
-import { motion, Variants } from "framer-motion"
+import { Check } from 'lucide-react'
+import { motion } from "framer-motion"
+import { Variants } from "framer-motion"
 
 export default function Pricing() {
   const plans = [
     {
       name: "Starter",
-      price: "₦100,000",
+      price: "₦75,000",
       color: "bg-green-50",
       accent: "bg-green-600",
       features: [
@@ -21,7 +22,7 @@ export default function Pricing() {
     },
     {
       name: "Professional",
-      price: "₦200,000",
+      price: "₦180,000",
       color: "bg-blue-50",
       accent: "bg-blue-600",
       highlighted: true,
@@ -29,7 +30,7 @@ export default function Pricing() {
     },
     {
       name: "Premium",
-      price: "₦400,000",
+      price: "₦450,000",
       color: "bg-amber-50",
       accent: "bg-amber-600",
       features: [
@@ -91,6 +92,7 @@ export default function Pricing() {
 
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
+                  onClick={() => window.location.href = '/get-quote'}
                   className={`w-full mb-8 rounded-lg py-6 font-semibold ${
                     plan.highlighted
                       ? `${plan.accent} text-white hover:opacity-90`

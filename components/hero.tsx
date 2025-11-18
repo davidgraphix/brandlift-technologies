@@ -3,7 +3,10 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { motion, Variants } from "framer-motion"
+import Link from "next/link"
 import Image from "next/image"
+ "framer-motion"
+
 
 
 export default function Hero() {
@@ -65,22 +68,26 @@ export default function Hero() {
               branding solutions that transform ideas into impactful results.
             </motion.p>
 
-            <motion.div className="flex flex-col sm:flex-row gap-4" variants={itemVariants}>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-lg flex items-center gap-2">
-                  Get a Free Quote
-                  <ArrowRight size={20} />
-                </Button>
-              </motion.div>
+           <motion.div className="flex flex-col sm:flex-row gap-4" variants={itemVariants}>
+              <Link href="/get-quote">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-lg flex items-center gap-2">
+                    Get a Free Quote
+                    <ArrowRight size={20} />
+                  </Button>
+                </motion.div>
+              </Link>
+              
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
+                  onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
                   variant="outline"
                   className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg rounded-lg bg-transparent"
                 >
                   View Packages
                 </Button>
               </motion.div>
-            </motion.div>
+            </motion.div>  
 
             {/* Trust indicators */}
             <motion.div className="flex items-center gap-6 pt-8 border-t border-gray-200" variants={itemVariants}>

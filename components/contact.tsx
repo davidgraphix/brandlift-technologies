@@ -15,6 +15,9 @@ export default function Contact() {
     message: "",
   })
 
+  const [isLoading, setIsLoading] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -23,10 +26,43 @@ export default function Contact() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    setFormData({ name: "", email: "", businessName: "", message: "" })
+    setIsLoading(true)
+
+    try {
+      const response = await fetch('/api/send-contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        const message = `Hi! I'm reaching out from your website.
+
+Name: ${formData.name}
+Business: ${formData.businessName}
+Email: ${formData.email}
+
+Message: ${formData.message}`
+
+        const whatsappUrl = `https://wa.me/2348123456789?text=${encodeURIComponent(message)}`
+        window.open(whatsappUrl, '_blank')
+
+        setSubmitStatus('success')
+        setFormData({ name: "", email: "", businessName: "", message: "" })
+        setTimeout(() => setSubmitStatus('idle'), 5000)
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const contactItems: Array<{
@@ -100,6 +136,26 @@ export default function Contact() {
             whileInView="visible"
             viewport={{ once: true }}
           >
+            {submitStatus === 'success' && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 bg-green-50 border-2 border-green-300 rounded-lg text-green-700"
+              >
+                Message sent successfully! We'll contact you shortly on WhatsApp.
+              </motion.div>
+            )}
+
+            {submitStatus === 'error' && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 bg-red-50 border-2 border-red-300 rounded-lg text-red-700"
+              >
+                Failed to send message. Please try again.
+              </motion.div>
+            )}
+
             {[
               { name: "name", label: "Full Name", type: "text", placeholder: "Your name" },
               { name: "email", label: "Email Address", type: "email", placeholder: "your@email.com" },
@@ -138,9 +194,10 @@ export default function Contact() {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   type="submit"
+                  disabled={isLoading}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold"
                 >
-                  Send Message
+                  {isLoading ? 'Sending...' : 'Send Message'}
                 </Button>
               </motion.div>
             </motion.div>
