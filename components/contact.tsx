@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Phone, MessageCircle, Mail, MapPin } from 'lucide-react'
-import { motion } from "framer-motion"
-import type { Variants } from "framer-motion"
+import type React from "react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Phone, MessageCircle, Mail, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -13,31 +13,35 @@ export default function Contact() {
     email: "",
     businessName: "",
     message: "",
-  })
+  });
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     try {
-      const response = await fetch('/api/send-contact', {
-        method: 'POST',
+      const response = await fetch("/api/send-contact", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
+      });
 
       if (response.ok) {
         const message = `Hi! I'm reaching out from your website.
@@ -46,33 +50,41 @@ Name: ${formData.name}
 Business: ${formData.businessName}
 Email: ${formData.email}
 
-Message: ${formData.message}`
+Message: ${formData.message}`;
 
-        const whatsappUrl = `https://wa.me/2348123456789?text=${encodeURIComponent(message)}`
-        window.open(whatsappUrl, '_blank')
+        const whatsappUrl = `https://wa.me/2348123456789?text=${encodeURIComponent(
+          message
+        )}`;
+        window.open(whatsappUrl, "_blank");
 
-        setSubmitStatus('success')
-        setFormData({ name: "", email: "", businessName: "", message: "" })
-        setTimeout(() => setSubmitStatus('idle'), 5000)
+        setSubmitStatus("success");
+        setFormData({ name: "", email: "", businessName: "", message: "" });
+        setTimeout(() => setSubmitStatus("idle"), 5000);
       } else {
-        setSubmitStatus('error')
+        setSubmitStatus("error");
       }
     } catch (error) {
-      console.error('Error:', error)
-      setSubmitStatus('error')
+      console.error("Error:", error);
+      setSubmitStatus("error");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const contactItems: Array<{
-    icon: React.ComponentType<{ className?: string }>
-    label: string
-    value: string
-    link?: string
-    color: string
+    icon: React.ComponentType<{ className?: string }>;
+    label: string;
+    value: string;
+    link?: string;
+    color: string;
   }> = [
-    { icon: Phone, label: "Phone", value: "08160499031", link: "tel:08160499031", color: "bg-blue-600" },
+    {
+      icon: Phone,
+      label: "Phone",
+      value: "08160499031",
+      link: "tel:08160499031",
+      color: "bg-blue-600",
+    },
     {
       icon: MessageCircle,
       label: "WhatsApp",
@@ -87,8 +99,13 @@ Message: ${formData.message}`
       link: "mailto:bamideledavidsmart40@gmail.com",
       color: "bg-red-500",
     },
-    { icon: MapPin, label: "Location", value: "Lagos, Nigeria", color: "bg-purple-600" },
-  ]
+    {
+      icon: MapPin,
+      label: "Location",
+      value: "Lagos, Nigeria",
+      color: "bg-purple-600",
+    },
+  ];
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -99,7 +116,7 @@ Message: ${formData.message}`
         delayChildren: 0.2,
       },
     },
-  }
+  };
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -108,7 +125,7 @@ Message: ${formData.message}`
       y: 0,
       transition: { duration: 0.6, ease: "easeOut" },
     },
-  }
+  };
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
@@ -123,7 +140,9 @@ Message: ${formData.message}`
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-balance">
             Let's Build Something Amazing Together
           </h2>
-          <p className="text-xl text-gray-600">Ready to grow your online presence? Get in touch with us today</p>
+          <p className="text-xl text-gray-600">
+            Ready to grow your online presence? Get in touch with us today
+          </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12">
@@ -136,17 +155,18 @@ Message: ${formData.message}`
             whileInView="visible"
             viewport={{ once: true }}
           >
-            {submitStatus === 'success' && (
+            {submitStatus === "success" && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="p-4 bg-green-50 border-2 border-green-300 rounded-lg text-green-700"
               >
-                Message sent successfully! We'll contact you shortly on WhatsApp.
+                Message sent successfully! We'll contact you shortly on
+                WhatsApp.
               </motion.div>
             )}
 
-            {submitStatus === 'error' && (
+            {submitStatus === "error" && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -157,12 +177,29 @@ Message: ${formData.message}`
             )}
 
             {[
-              { name: "name", label: "Full Name", type: "text", placeholder: "Your name" },
-              { name: "email", label: "Email Address", type: "email", placeholder: "your@email.com" },
-              { name: "businessName", label: "Business Name", type: "text", placeholder: "Your business name" },
+              {
+                name: "name",
+                label: "Full Name",
+                type: "text",
+                placeholder: "Your name",
+              },
+              {
+                name: "email",
+                label: "Email Address",
+                type: "email",
+                placeholder: "your@email.com",
+              },
+              {
+                name: "businessName",
+                label: "Business Name",
+                type: "text",
+                placeholder: "Your business name",
+              },
             ].map((field, index) => (
               <motion.div key={index} variants={itemVariants}>
-                <label className="block text-gray-700 font-semibold mb-2">{field.label}</label>
+                <label className="block text-gray-700 font-semibold mb-2">
+                  {field.label}
+                </label>
                 <motion.input
                   type={field.type}
                   name={field.name}
@@ -177,7 +214,9 @@ Message: ${formData.message}`
             ))}
 
             <motion.div variants={itemVariants}>
-              <label className="block text-gray-700 font-semibold mb-2">Message</label>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Message
+              </label>
               <motion.textarea
                 name="message"
                 value={formData.message}
@@ -191,13 +230,16 @@ Message: ${formData.message}`
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   type="submit"
                   disabled={isLoading}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold"
                 >
-                  {isLoading ? 'Sending...' : 'Send Message'}
+                  {isLoading ? "Sending..." : "Send Message"}
                 </Button>
               </motion.div>
             </motion.div>
@@ -215,11 +257,13 @@ Message: ${formData.message}`
               className="bg-gradient-to-br from-blue-50 to-white rounded-xl p-8 border border-blue-100"
               variants={itemVariants}
             >
-              <h3 className="text-2xl font-bold text-gray-900 mb-8">Get in Touch</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-8">
+                Get in Touch
+              </h3>
 
               <div className="space-y-6">
                 {contactItems.map((item, index) => {
-                  const Icon = item.icon
+                  const Icon = item.icon;
                   return (
                     <motion.div
                       key={index}
@@ -237,27 +281,34 @@ Message: ${formData.message}`
                         <Icon className="w-5 h-5 text-white" />
                       </motion.div>
                       <div>
-                        <p className="font-semibold text-gray-900">{item.label}</p>
-                        {item.link && (
+                        <p className="font-semibold text-gray-900">
+                          {item.label}
+                        </p>
+                        {item.link &&
                           (item.link.startsWith("http") ||
-                            item.link.startsWith("tel") ||
-                            item.link.startsWith("mailto")) ? (
-                          <a
-                            href={item.link}
-                            target={item.link.startsWith("http") ? "_blank" : undefined}
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:underline"
-                          >
-                            {item.value}
-                          </a>
-                        ) : (
+                          item.link.startsWith("tel") ||
+                          item.link.startsWith("mailto") ? (
+                            <a
+                              href={item.link}
+                              target={
+                                item.link.startsWith("http")
+                                  ? "_blank"
+                                  : undefined
+                              }
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:underline"
+                            >
+                              {item.value}
+                            </a>
+                          ) : (
+                            <p className="text-gray-600">{item.value}</p>
+                          ))}
+                        {!item.link && (
                           <p className="text-gray-600">{item.value}</p>
-                        )
                         )}
-                        {!item.link && <p className="text-gray-600">{item.value}</p>}
                       </div>
                     </motion.div>
-                  )
+                  );
                 })}
               </div>
             </motion.div>
@@ -266,7 +317,10 @@ Message: ${formData.message}`
             <motion.div
               className="bg-blue-600 text-white rounded-xl p-8"
               variants={itemVariants}
-              whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(37, 99, 235, 0.3)" }}
+              whileHover={{
+                y: -5,
+                boxShadow: "0 20px 40px rgba(37, 99, 235, 0.3)",
+              }}
             >
               <p className="font-semibold mb-2">⚡ Quick Response</p>
               <p>We typically respond within 2-4 hours during business hours</p>
@@ -275,5 +329,5 @@ Message: ${formData.message}`
         </div>
       </div>
     </section>
-  )
+  );
 }
