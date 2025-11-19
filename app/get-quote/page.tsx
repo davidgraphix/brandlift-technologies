@@ -282,7 +282,7 @@ ${formData.businessDescription}`
               <FormSelect
                 label="Project Budget Range"
                 name="projectBudget"
-                options={['₦50k - ₦100k', '₦100k - ₦250k', '₦250k - ₦500k', '₦500k - ₦1M', '₦1M+']}
+                options={['₦80k - ₦150k', '₦200k - ₦300k', '₦450k - ₦600k', '₦700k - ₦1M', '₦1M+']}
                 value={formData.projectBudget}
                 onChange={handleInputChange}
               />

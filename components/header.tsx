@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Link, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -58,7 +58,9 @@ export default function Header() {
               </Button> */}
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Button
+              onClick={() => window.location.href = '/get-quote'}
+               className="bg-blue-600 hover:bg-blue-700 text-white">
                 Get Started
               </Button>
             </motion.div>
@@ -101,7 +103,9 @@ export default function Header() {
               {/* <Button variant="outline" className="flex-1 bg-transparent">
                 Sign In
               </Button> */}
-              <Button className="flex-1 bg-blue-600">Get Started</Button>
+              
+              <Button onClick={() => window.location.href = '/get-quote'}
+               className="flex-1 bg-blue-600">Get Started</Button>
             </div>
           </div>
         </motion.div>
