@@ -116,7 +116,7 @@ Budget: ${formData.projectBudget}
 
 ${formData.businessDescription}`;
 
-        const whatsappUrl = `https://wa.me/2348123456789?text=${encodeURIComponent(
+        const whatsappUrl = `https://wa.me/2349117542774?text=${encodeURIComponent(
           message
         )}`;
         window.open(whatsappUrl, "_blank");
