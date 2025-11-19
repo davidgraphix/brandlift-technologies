@@ -23,22 +23,22 @@ export default function Footer() {
             <h4 className="font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#home" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
                   Home
                 </a>
               </li>
               <li>
-                <a href="#services" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/#services" className="text-gray-400 hover:text-white transition-colors">
                   Services
                 </a>
               </li>
               <li>
-                <a href="#portfolio" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/#portfolio" className="text-gray-400 hover:text-white transition-colors">
                   Portfolio
                 </a>
               </li>
               <li>
-                <a href="#contact" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/#contact" className="text-gray-400 hover:text-white transition-colors">
                   Contact
                 </a>
               </li>
@@ -50,22 +50,22 @@ export default function Footer() {
             <h4 className="font-bold mb-4">Services</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#services" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/#services" className="text-gray-400 hover:text-white transition-colors">
                   Website Design
                 </a>
               </li>
               <li>
-                <a href="#services" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/#services" className="text-gray-400 hover:text-white transition-colors">
                   E-commerce
                 </a>
               </li>
               <li>
-                <a href="#services" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/#services" className="text-gray-400 hover:text-white transition-colors">
                   SEO
                 </a>
               </li>
               <li>
-                <a href="#services" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/#services" className="text-gray-400 hover:text-white transition-colors">
                   Maintenance
                 </a>
               </li>

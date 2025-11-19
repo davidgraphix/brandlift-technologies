@@ -1,94 +1,105 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { useRouter } from 'next/navigation'
-import Header from '@/components/header'
-import Footer from '@/components/footer'
-import { Button } from '@/components/ui/button'
-import FormInput from '@/components/form-input'
-import FormSelect from '@/components/form-select'
-import FormTextarea from '@/components/form-textarea'
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import Footer from "@/components/footer";
+import { Button } from "@/components/ui/button";
+import FormInput from "@/components/form-input";
+import FormSelect from "@/components/form-select";
+import FormTextarea from "@/components/form-textarea";
+import Link from "next/link";
+import { Home } from "lucide-react";
 
 interface FormErrors {
-  [key: string]: string
+  [key: string]: string;
 }
 
 export default function GetQuotePage() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [errors, setErrors] = useState<FormErrors>({})
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const [formData, setFormData] = useState({
-    fullName: '',
-    businessName: '',
-    businessAddress: '',
-    phoneNumber: '',
-    email: '',
-    businessCategory: '',
-    businessDescription: '',
-    currentWebsite: '',
-    service: '',
-    pricingPackage: '',
-    projectBudget: '',
-    location: '',
-    startTimeline: '',
-    additionalNote: '',
-  })
+    fullName: "",
+    businessName: "",
+    businessAddress: "",
+    phoneNumber: "",
+    email: "",
+    businessCategory: "",
+    businessDescription: "",
+    currentWebsite: "",
+    service: "",
+    pricingPackage: "",
+    projectBudget: "",
+    location: "",
+    startTimeline: "",
+    additionalNote: "",
+  });
 
   const validateForm = () => {
-    const newErrors: FormErrors = {}
+    const newErrors: FormErrors = {};
 
-    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required'
-    if (!formData.businessName.trim()) newErrors.businessName = 'Business name is required'
-    if (!formData.businessAddress.trim()) newErrors.businessAddress = 'Business address is required'
-    if (!formData.phoneNumber.trim()) newErrors.phoneNumber = 'Phone number is required'
-    if (!formData.email.trim()) newErrors.email = 'Email is required'
-    if (!formData.email.includes('@')) newErrors.email = 'Valid email is required'
-    if (!formData.businessCategory) newErrors.businessCategory = 'Business category is required'
-    if (!formData.businessDescription.trim()) newErrors.businessDescription = 'Business description is required'
-    if (!formData.service) newErrors.service = 'Service selection is required'
-    if (!formData.pricingPackage) newErrors.pricingPackage = 'Pricing package is required'
-    if (!formData.location.trim()) newErrors.location = 'Location is required'
-    if (!formData.startTimeline) newErrors.startTimeline = 'Start timeline is required'
+    if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
+    if (!formData.businessName.trim())
+      newErrors.businessName = "Business name is required";
+    if (!formData.businessAddress.trim())
+      newErrors.businessAddress = "Business address is required";
+    if (!formData.phoneNumber.trim())
+      newErrors.phoneNumber = "Phone number is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    if (!formData.email.includes("@"))
+      newErrors.email = "Valid email is required";
+    if (!formData.businessCategory)
+      newErrors.businessCategory = "Business category is required";
+    if (!formData.businessDescription.trim())
+      newErrors.businessDescription = "Business description is required";
+    if (!formData.service) newErrors.service = "Service selection is required";
+    if (!formData.pricingPackage)
+      newErrors.pricingPackage = "Pricing package is required";
+    if (!formData.location.trim()) newErrors.location = "Location is required";
+    if (!formData.startTimeline)
+      newErrors.startTimeline = "Start timeline is required";
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
+    }));
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
-        [name]: '',
-      }))
+        [name]: "",
+      }));
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!validateForm()) {
-      return
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
-      const response = await fetch('/api/send-quote', {
-        method: 'POST',
+      const response = await fetch("/api/send-quote", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
+      });
 
       if (response.ok) {
         // Open WhatsApp
@@ -103,22 +114,26 @@ Service: ${formData.service}
 Pricing Plan: ${formData.pricingPackage}
 Budget: ${formData.projectBudget}
 
-${formData.businessDescription}`
+${formData.businessDescription}`;
 
-        const whatsappUrl = `https://wa.me/2348123456789?text=${encodeURIComponent(message)}`
-        window.open(whatsappUrl, '_blank')
+        const whatsappUrl = `https://wa.me/2348123456789?text=${encodeURIComponent(
+          message
+        )}`;
+        window.open(whatsappUrl, "_blank");
 
-        router.push('/thank-you')
+        router.push("/thank-you");
       } else {
-        setErrors({ submit: 'Failed to send quote request. Please try again.' })
+        setErrors({
+          submit: "Failed to send quote request. Please try again.",
+        });
       }
     } catch (error) {
-      setErrors({ submit: 'An error occurred. Please try again.' })
-      console.error('Error:', error)
+      setErrors({ submit: "An error occurred. Please try again." });
+      console.error("Error:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -129,11 +144,26 @@ ${formData.businessDescription}`
         delayChildren: 0.2,
       },
     },
-  }
+  };
 
   return (
     <main>
-      <Header />
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="fixed top-6 left-6 z-50"
+      >
+        <Link href="/">
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 bg-white/90 backdrop-blur-md border-2 border-blue-200 hover:bg-blue-50 hover:border-blue-400 transition-all shadow-lg"
+          >
+            <Home size={20} className="text-blue-600" />
+            <span className="font-semibold text-gray-700">Back to Home</span>
+          </Button>
+        </Link>
+      </motion.div>
       <section className="min-h-screen bg-gradient-to-b from-white to-blue-50 py-20 px-4">
         <div className="max-w-2xl mx-auto">
           <motion.div
@@ -142,9 +172,42 @@ ${formData.businessDescription}`
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Get Your Free Quote</h1>
-            <p className="text-xl text-gray-600">Fill out the form below and our team will contact you shortly</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Get Your Free Quote
+            </h1>
+            <p className="text-xl text-gray-600">
+              Fill out the form below and our team will contact you shortly
+            </p>
           </motion.div>
+
+           <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 mb-8 shadow-xl text-white"
+          >
+            <h2 className="text-2xl font-bold mb-4">About BrandLift Technologies</h2>
+            <p className="text-blue-100 mb-4 leading-relaxed">
+              We are a Nigerian tech company dedicated to helping local businesses establish their online presence. 
+              Our mission is to lift brands with technology, providing affordable and professional web solutions 
+              that help businesses grow and thrive in the digital age.
+            </p>
+            <div className="grid md:grid-cols-3 gap-4 mt-6">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-3xl font-bold mb-1">50+</div>
+                <div className="text-blue-200 text-sm">Happy Clients</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-3xl font-bold mb-1">100+</div>
+                <div className="text-blue-200 text-sm">Projects Done</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-3xl font-bold mb-1">24/7</div>
+                <div className="text-blue-200 text-sm">Support</div>
+              </div>
+            </div>
+          </motion.div>
+
 
           <motion.form
             onSubmit={handleSubmit}
@@ -221,7 +284,15 @@ ${formData.businessDescription}`
               <FormSelect
                 label="Business Category"
                 name="businessCategory"
-                options={['Fashion', 'Tech', 'Food', 'Real Estate', 'Logistics', 'Photography', 'Others']}
+                options={[
+                  "Fashion",
+                  "Tech",
+                  "Food",
+                  "Real Estate",
+                  "Logistics",
+                  "Photography",
+                  "Others",
+                ]}
                 value={formData.businessCategory}
                 onChange={handleInputChange}
                 error={errors.businessCategory}
@@ -230,7 +301,14 @@ ${formData.businessDescription}`
               <FormSelect
                 label="Location"
                 name="location"
-                options={['Lagos', 'Abuja', 'Port Harcourt', 'Kano', 'Ibadan', 'Other']}
+                options={[
+                  "Lagos",
+                  "Abuja",
+                  "Port Harcourt",
+                  "Kano",
+                  "Ibadan",
+                  "Other",
+                ]}
                 value={formData.location}
                 onChange={handleInputChange}
                 error={errors.location}
@@ -261,7 +339,14 @@ ${formData.businessDescription}`
               <FormSelect
                 label="What service are you requesting?"
                 name="service"
-                options={['Website Design', 'Branding', 'Full Tech Setup', 'E-Commerce Website', 'Custom Web App', 'Digital Marketing']}
+                options={[
+                  "Website Design",
+                  "Branding",
+                  "Full Tech Setup",
+                  "E-Commerce Website",
+                  "Custom Web App",
+                  "Digital Marketing",
+                ]}
                 value={formData.service}
                 onChange={handleInputChange}
                 error={errors.service}
@@ -270,7 +355,7 @@ ${formData.businessDescription}`
               <FormSelect
                 label="Preferred Pricing Package"
                 name="pricingPackage"
-                options={['Starter', 'Professional', 'Premium', 'Custom']}
+                options={["Starter", "Professional", "Premium", "Custom"]}
                 value={formData.pricingPackage}
                 onChange={handleInputChange}
                 error={errors.pricingPackage}
@@ -282,14 +367,20 @@ ${formData.businessDescription}`
               <FormSelect
                 label="Project Budget Range"
                 name="projectBudget"
-                options={['₦80k - ₦150k', '₦200k - ₦300k', '₦450k - ₦600k', '₦700k - ₦1M', '₦1M+']}
+                options={[
+                  "₦80k - ₦150k",
+                  "₦200k - ₦300k",
+                  "₦450k - ₦600k",
+                  "₦700k - ₦1M",
+                  "₦1M+",
+                ]}
                 value={formData.projectBudget}
                 onChange={handleInputChange}
               />
               <FormSelect
                 label="How soon do you want to start?"
                 name="startTimeline"
-                options={['Immediately', '1–2 weeks', '1 month', 'Not sure']}
+                options={["Immediately", "1–2 weeks", "1 month", "Not sure"]}
                 value={formData.startTimeline}
                 onChange={handleInputChange}
                 error={errors.startTimeline}
@@ -316,7 +407,7 @@ ${formData.businessDescription}`
                 disabled={isLoading}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg"
               >
-                {isLoading ? 'Sending...' : 'Get Your Quote'}
+                {isLoading ? "Sending..." : "Get Your Quote"}
               </Button>
             </motion.div>
           </motion.form>
@@ -324,5 +415,5 @@ ${formData.businessDescription}`
       </section>
       <Footer />
     </main>
-  )
+  );
 }
