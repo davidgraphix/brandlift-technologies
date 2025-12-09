@@ -34,6 +34,11 @@ export default function Portfolio() {
       category: "Business",
       image: "/e-commerse.png",
     },
+      {
+      title: "Barber Shop Website",
+      category: "Business",
+      image: "/2-talk.jpeg",
+    },
   ]
 
   const containerVariants: Variants = {
