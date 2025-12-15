@@ -95,8 +95,8 @@ Message: ${formData.message}`;
     {
       icon: Mail,
       label: "Email",
-      value: "bamideledavidsmart40@gmail.com",
-      link: "mailto:bamideledavidsmart40@gmail.com",
+      value: "brandlifttechnologies@gmail.com",
+      link: "mailto: brandlifttechnologies@gmail.com",
       color: "bg-red-500",
     },
     {
