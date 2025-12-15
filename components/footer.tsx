@@ -88,7 +88,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:bamideledavidsmart40@gmail.com"
+                  href="mailto: brandlifttechnologies@gmail.com"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Email
