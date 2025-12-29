@@ -9,11 +9,11 @@ export default function Pricing() {
   const plans = [
     {
       name: "Starter",
-      price: "₦80,000",
+      price: "From ₦80,000",
       color: "bg-green-50",
       accent: "bg-green-600",
       features: [
-        "3–4 pages",
+        "2–3 pages",
         "Mobile responsive design",
         "WhatsApp chat integration",
         "Basic SEO",
@@ -22,15 +22,15 @@ export default function Pricing() {
     },
     {
       name: "Professional",
-      price: "₦200,000",
+      price: "From ₦200,000",
       color: "bg-blue-50",
       accent: "bg-blue-600",
       highlighted: true,
-      features: ["6–8 pages", "Custom design", "Booking/contact form", "Google Business setup", "2 months maintenance"],
+      features: ["4–6 pages", "Custom design", "Booking/contact form", "Google Business setup", "1.5 months maintenance"],
     },
     {
       name: "Premium",
-      price: "₦450,000",
+      price: "From ₦450,000",
       color: "bg-amber-50",
       accent: "bg-amber-600",
       features: [
@@ -38,7 +38,7 @@ export default function Pricing() {
         "Admin dashboard",
         "Advanced SEO",
         "Free domain & hosting setup",
-        "3 months maintenance",
+        "2 months maintenance",
       ],
     },
   ]
