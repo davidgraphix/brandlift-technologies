@@ -52,7 +52,7 @@ Email: ${formData.email}
 
 Message: ${formData.message}`;
 
-        const whatsappUrl = `https://wa.me/2349117542774?text=${encodeURIComponent(
+        const whatsappUrl = `https://wa.me/2348160499031?text=${encodeURIComponent(
           message
         )}`;
         window.open(whatsappUrl, "_blank");
@@ -88,8 +88,8 @@ Message: ${formData.message}`;
     {
       icon: MessageCircle,
       label: "WhatsApp",
-      value: "+234 911 754 2774",
-      link: "https://wa.me/2349117542774",
+      value: "+234 816 6049 9031",
+      link: "https://wa.me/2348160499031",
       color: "bg-green-500",
     },
     {
