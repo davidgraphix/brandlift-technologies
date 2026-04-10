@@ -32,7 +32,7 @@ export default function About() {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 text-balance">Who We Are</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
               At BrandLift Technologies, we believe technology is the bridge between ideas and success. We help business
-              owners, startups, and organizations grow by designing websites, branding, and digital systems that work —
+              owners, startups, and organizations grow by designing & developing websites, branding, and digital systems that work —
               simple, smart, and impactful.
             </p>
             <div className="space-y-3 pt-4">

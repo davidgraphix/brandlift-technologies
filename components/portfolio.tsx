@@ -5,9 +5,19 @@ import { motion, Variants } from "framer-motion"
 export default function Portfolio() {
   const projects = [
     {
+      title: "Window Cleaning Service Website",
+      category: "E-commerce",
+      image: "/riseclear.png",
+    },
+    {
       title: "Printing E-commerce Store",
       category: "E-commerce",
       image: "/printpalash.png",
+    },
+       {
+      title: "Photography Portfolio",
+      category: "Portfolio",
+      image: "/damzypictures.png",
     },
     {
       title: "Tech Academy Website",
