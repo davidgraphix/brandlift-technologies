@@ -9,7 +9,7 @@ export default function Pricing() {
   const plans = [
     {
       name: "Starter",
-      price: "From ₦80,000",
+      price: "From $60",
       color: "bg-green-50",
       accent: "bg-green-600",
       features: [
@@ -22,7 +22,7 @@ export default function Pricing() {
     },
     {
       name: "Professional",
-      price: "From ₦200,000",
+      price: "From $200",
       color: "bg-blue-50",
       accent: "bg-blue-600",
       highlighted: true,
@@ -30,7 +30,7 @@ export default function Pricing() {
     },
     {
       name: "Premium",
-      price: "From ₦450,000",
+      price: "From $400",
       color: "bg-amber-50",
       accent: "bg-amber-600",
       features: [
