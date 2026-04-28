@@ -43,18 +43,24 @@ export default function GetQuotePage() {
     additionalNote: "",
   });
 
-  // ✅ ADDED
   useEffect(() => {
+  const detectCountry = async () => {
     try {
-      const locale = navigator.language || "en-NG";
-      const country = locale.split("-")[1]?.toLowerCase();
-      if (country) {
-        setCountryCode(country);
+      const res = await fetch("https://ipapi.co/json/");
+      const data = await res.json();
+
+      if (data && data.country) {
+        setCountryCode(data.country.toLowerCase()); // e.g. "ng", "us"
+      } else {
+        setCountryCode("ng"); // fallback
       }
-    } catch {
-      setCountryCode("ng");
+    } catch (error) {
+      setCountryCode("ng"); // fallback if API fails
     }
-  }, []);
+  };
+
+  detectCountry();
+}, []);
 
   const validateForm = () => {
     const newErrors: FormErrors = {};
