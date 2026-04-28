@@ -11,6 +11,10 @@ import FormTextarea from "@/components/form-textarea";
 import Link from "next/link";
 import { Home } from "lucide-react";
 
+// ✅ ADDED
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 interface FormErrors {
   [key: string]: string;
 }
@@ -208,7 +212,6 @@ ${formData.businessDescription}`;
             </div>
           </motion.div>
 
-
           <motion.form
             onSubmit={handleSubmit}
             variants={containerVariants}
@@ -217,57 +220,54 @@ ${formData.businessDescription}`;
             className="bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-100"
           >
             {errors.submit && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-red-50 border-2 border-red-300 rounded-lg text-red-700"
-              >
+              <motion.div className="mb-6 p-4 bg-red-50 border-2 border-red-300 rounded-lg text-red-700">
                 {errors.submit}
               </motion.div>
             )}
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <FormInput
-                label="Full Name"
-                name="fullName"
-                placeholder="Your full name"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                error={errors.fullName}
-                required
-              />
-              <FormInput
-                label="Business Name"
-                name="businessName"
-                placeholder="Your business name"
-                value={formData.businessName}
-                onChange={handleInputChange}
-                error={errors.businessName}
-                required
-              />
+              <FormInput label="Full Name" name="fullName" placeholder="Your full name" value={formData.fullName} onChange={handleInputChange} error={errors.fullName} required />
+              <FormInput label="Business Name" name="businessName" placeholder="Your business name" value={formData.businessName} onChange={handleInputChange} error={errors.businessName} required />
             </div>
 
-            <FormInput
-              label="Business Address"
-              name="businessAddress"
-              placeholder="Enter your business address"
-              value={formData.businessAddress}
-              onChange={handleInputChange}
-              error={errors.businessAddress}
-              required
-            />
+            <FormInput label="Business Address" name="businessAddress" placeholder="Enter your business address" value={formData.businessAddress} onChange={handleInputChange} error={errors.businessAddress} required />
 
             <div className="grid md:grid-cols-2 gap-6 mt-6 mb-6">
-              <FormInput
-                label="Phone Number"
-                name="phoneNumber"
-                type="tel"
-                placeholder="+234..."
-                value={formData.phoneNumber}
-                onChange={handleInputChange}
-                error={errors.phoneNumber}
-                required
-              />
+
+              {/* ✅ ONLY UPDATED BLOCK */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Phone Number
+                </label>
+
+                <PhoneInput
+                  country={"ng"}
+                  value={formData.phoneNumber}
+                  onChange={(phone) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      phoneNumber: phone,
+                    }));
+
+                    if (errors.phoneNumber) {
+                      setErrors((prev) => ({
+                        ...prev,
+                        phoneNumber: "",
+                      }));
+                    }
+                  }}
+                  inputClass="!w-full !py-3 !pl-14 !border-2 !border-gray-200 !rounded-lg"
+                  containerClass="!w-full"
+                  buttonClass="!border-2 !border-gray-200 !rounded-l-lg"
+                />
+
+                {errors.phoneNumber && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.phoneNumber}
+                  </p>
+                )}
+              </div>
+
               <FormInput
                 label="Email Address"
                 name="email"
@@ -279,6 +279,10 @@ ${formData.businessDescription}`;
                 required
               />
             </div>
+
+            
+
+            
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <FormSelect
