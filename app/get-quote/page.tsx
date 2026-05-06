@@ -1,6 +1,7 @@
+ 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Footer from "@/components/footer";
@@ -22,8 +23,6 @@ export default function GetQuotePage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
-
-  // ✅ ADDED
   const [countryCode, setCountryCode] = useState("ng");
 
   const [formData, setFormData] = useState({
@@ -42,7 +41,7 @@ export default function GetQuotePage() {
     startTimeline: "",
     additionalNote: "",
   });
-
+  
   useEffect(() => {
   const detectCountry = async () => {
     try {
@@ -127,6 +126,7 @@ export default function GetQuotePage() {
       });
 
       if (response.ok) {
+        // Open WhatsApp
         const message = `Hi! I'm interested in your services.
         
 Name: ${formData.fullName}
@@ -172,68 +172,155 @@ ${formData.businessDescription}`;
 
   return (
     <main>
-      <section className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="fixed top-6 left-6 z-50"
+      >
+        <Link href="/">
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 bg-white/90 backdrop-blur-md border-2 border-blue-200 hover:bg-blue-50 hover:border-blue-400 transition-all shadow-lg"
+          >
+            <Home size={20} className="text-blue-600" />
+            <span className="font-semibold text-gray-700">Back to Home</span>
+          </Button>
+        </Link>
+      </motion.div>
+      <section className="min-h-screen bg-gradient-to-b from-white to-blue-50 py-20 px-4">
+        <div className="max-w-2xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Get Your Free Quote
+            </h1>
+            <p className="text-xl text-gray-600">
+              Fill out the form below and our team will contact you shortly
+            </p>
+          </motion.div>
+
+           <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 mb-8 shadow-xl text-white"
+          >
+            <h2 className="text-2xl font-bold mb-4">About BrandLift Technologies</h2>
+            <p className="text-blue-100 mb-4 leading-relaxed">
+              We are a Nigerian tech company dedicated to helping local businesses establish their online presence. 
+              Our mission is to lift brands with technology, providing affordable and professional web solutions 
+              that help businesses grow and thrive in the digital age.
+            </p>
+            <div className="grid md:grid-cols-3 gap-4 mt-6">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-3xl font-bold mb-1">50+</div>
+                <div className="text-blue-200 text-sm">Happy Clients</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-3xl font-bold mb-1">100+</div>
+                <div className="text-blue-200 text-sm">Projects Done</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-3xl font-bold mb-1">24/7</div>
+                <div className="text-blue-200 text-sm">Support</div>
+              </div>
+            </div>
+          </motion.div>
+
+
           <motion.form
             onSubmit={handleSubmit}
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="space-y-6"
+            className="bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-100"
           >
-            <div className="grid md:grid-cols-2 gap-6 mt-6 mb-6">
+            {errors.submit && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 bg-red-50 border-2 border-red-300 rounded-lg text-red-700"
+              >
+                {errors.submit}
+              </motion.div>
+            )}
 
-        {/* ONLY phone input upgraded */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Phone Number
-          </label>
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <FormInput
+                label="Full Name"
+                name="fullName"
+                placeholder="Your full name"
+                value={formData.fullName}
+                onChange={handleInputChange}
+                error={errors.fullName}
+                required
+              />
+              <FormInput
+                label="Business Name"
+                name="businessName"
+                placeholder="Your business name"
+                value={formData.businessName}
+                onChange={handleInputChange}
+                error={errors.businessName}
+                required
+              />
+            </div>
 
-          <PhoneInput
-            country={countryCode}
-            value={formData.phoneNumber}
-            onChange={(phone) => {
-              setFormData((prev) => ({
-                ...prev,
-                phoneNumber: phone,
-              }));
+            <FormInput
+              label="Business Address"
+              name="businessAddress"
+              placeholder="Enter your business address"
+              value={formData.businessAddress}
+              onChange={handleInputChange}
+              error={errors.businessAddress}
+              required
+            />
 
-              if (errors.phoneNumber) {
-                setErrors((prev) => ({
-                  ...prev,
-                  phoneNumber: "",
-                }));
-              }
-            }}
-            inputClass="!w-full !py-3 !pl-14 !border-2 !border-gray-200 !rounded-lg"
-            containerClass="!w-full"
-            buttonClass="!border-2 !border-gray-200 !rounded-l-lg"
-          />
+<div className="grid md:grid-cols-2 gap-6 mb-6 mt-5">
+  <div>
+    <label className="block text-sm font-semibold text-gray-700 mb-2">
+      Phone Number <span className="text-red-500">*</span>
+    </label>
+    <PhoneInput
+      country={countryCode}
+      value={formData.phoneNumber}
+      onChange={(phone) => {
+        setFormData((prev) => ({
+          ...prev,
+          phoneNumber: phone,
+        }));
 
-          {errors.phoneNumber && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.phoneNumber}
-            </p>
-          )}
-        </div>
-
-        {/* email unchanged */}
-        <FormInput
-          label="Email Address"
-          name="email"
-          type="email"
-          placeholder="your@email.com"
-          value={formData.email}
-          onChange={handleInputChange}
-          error={errors.email}
-          required
-        />
-      </div>
-
-
-            
-
-            
+        if (errors.phoneNumber) {
+          setErrors((prev) => ({
+            ...prev,
+            phoneNumber: "",
+          }));
+        }
+      }}
+      inputClass="!w-full !py-3 !pl-14 !border-2 !border-gray-200 !rounded-lg"
+      containerClass="!w-full"
+      buttonClass="!border-2 !border-gray-200 !rounded-l-lg"
+    />
+    {errors.phoneNumber && (
+      <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>
+    )}
+  </div>
+  <FormInput
+    label="Email Address"
+    name="email"
+    type="email"
+    placeholder="your@email.com"
+    value={formData.email}
+    onChange={handleInputChange}
+    error={errors.email}
+    required
+  />
+</div>
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <FormSelect
@@ -365,10 +452,10 @@ ${formData.businessDescription}`;
                 {isLoading ? "Sending..." : "Get Your Quote"}
               </Button>
             </motion.div>
-            </motion.form>
-          </div>
-        </section>
-        <Footer />
-      </main>
-    );
-  }
+          </motion.form>
+        </div>
+      </section>
+      <Footer />
+    </main>
+  );
+}
