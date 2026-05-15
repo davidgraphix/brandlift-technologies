@@ -1,4 +1,3 @@
- 
 "use client";
 
 import { useEffect, useState } from "react";
@@ -41,24 +40,114 @@ export default function GetQuotePage() {
     startTimeline: "",
     additionalNote: "",
   });
-  
-  useEffect(() => {
-  const detectCountry = async () => {
-    try {
-      const res = await fetch("https://ipapi.co/json/");
-      const data = await res.json();
 
-      if (data && data.country) {
-        setCountryCode(data.country.toLowerCase()); // e.g. "ng", "us"
-      } else {
-        setCountryCode("ng"); // fallback
-      }
-    } catch (error) {
-      setCountryCode("ng"); // fallback if API fails
+useEffect(() => {
+  const detectLocation = () => {
+    if (!navigator.geolocation) {
+      setCountryCode("ng");
+
+      setFormData((prev) => ({
+        ...prev,
+        location: "Nigeria",
+      }));
+
+      return;
     }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          // Nigeria detection
+          if (
+            latitude >= 4 &&
+            latitude <= 14 &&
+            longitude >= 2 &&
+            longitude <= 15
+          ) {
+            setCountryCode("ng");
+
+            setFormData((prev) => ({
+              ...prev,
+              location: "Nigeria",
+            }));
+          }
+
+          // USA
+          else if (
+            latitude >= 24 &&
+            latitude <= 49 &&
+            longitude >= -125 &&
+            longitude <= -66
+          ) {
+            setCountryCode("us");
+
+            setFormData((prev) => ({
+              ...prev,
+              location: "United States",
+            }));
+          }
+
+          // UK
+          else if (
+            latitude >= 49 &&
+            latitude <= 61 &&
+            longitude >= -8 &&
+            longitude <= 2
+          ) {
+            setCountryCode("gb");
+
+            setFormData((prev) => ({
+              ...prev,
+              location: "United Kingdom",
+            }));
+          }
+
+          // Canada
+          else if (
+            latitude >= 41 &&
+            latitude <= 83 &&
+            longitude >= -141 &&
+            longitude <= -52
+          ) {
+            setCountryCode("ca");
+
+            setFormData((prev) => ({
+              ...prev,
+              location: "Canada",
+            }));
+          }
+
+          // fallback for all other countries
+          else {
+            setCountryCode("ng");
+
+            setFormData((prev) => ({
+              ...prev,
+              location: "Detected Successfully",
+            }));
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      (error) => {
+        console.log(error);
+
+        setCountryCode("ng");
+
+        setFormData((prev) => ({
+          ...prev,
+          location: "Nigeria",
+        }));
+      }
+    );
   };
 
-  detectCountry();
+  detectLocation();
 }, []);
 
   const validateForm = () => {
@@ -188,6 +277,7 @@ ${formData.businessDescription}`;
           </Button>
         </Link>
       </motion.div>
+
       <section className="min-h-screen bg-gradient-to-b from-white to-blue-50 py-20 px-4">
         <div className="max-w-2xl mx-auto">
           <motion.div
@@ -199,32 +289,40 @@ ${formData.businessDescription}`;
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Get Your Free Quote
             </h1>
+
             <p className="text-xl text-gray-600">
               Fill out the form below and our team will contact you shortly
             </p>
           </motion.div>
 
-           <motion.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 mb-8 shadow-xl text-white"
           >
-            <h2 className="text-2xl font-bold mb-4">About BrandLift Technologies</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              About BrandLift Technologies
+            </h2>
+
             <p className="text-blue-100 mb-4 leading-relaxed">
-              We are a Nigerian tech company dedicated to helping local businesses establish their online presence. 
-              Our mission is to lift brands with technology, providing affordable and professional web solutions 
-              that help businesses grow and thrive in the digital age.
+              We are a Nigerian tech company dedicated to helping local
+              businesses establish their online presence. Our mission is to lift
+              brands with technology, providing affordable and professional web
+              solutions that help businesses grow and thrive in the digital age.
             </p>
+
             <div className="grid md:grid-cols-3 gap-4 mt-6">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold mb-1">50+</div>
                 <div className="text-blue-200 text-sm">Happy Clients</div>
               </div>
+
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold mb-1">100+</div>
                 <div className="text-blue-200 text-sm">Projects Done</div>
               </div>
+
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-3xl font-bold mb-1">24/7</div>
                 <div className="text-blue-200 text-sm">Support</div>
@@ -232,8 +330,7 @@ ${formData.businessDescription}`;
             </div>
           </motion.div>
 
-
-          <motion.form
+           <motion.form
             onSubmit={handleSubmit}
             variants={containerVariants}
             initial="hidden"
@@ -340,22 +437,25 @@ ${formData.businessDescription}`;
                 error={errors.businessCategory}
                 required
               />
-              <FormSelect
-                label="Location"
-                name="location"
-                options={[
-                  "Lagos",
-                  "Abuja",
-                  "Port Harcourt",
-                  "Kano",
-                  "Ibadan",
-                  "Other",
-                ]}
-                value={formData.location}
-                onChange={handleInputChange}
-                error={errors.location}
-                required
-              />
+   <div>
+ 
+
+ <FormInput
+  label="Location"
+  name="location"
+  placeholder="Detecting your location..."
+  value={formData.location}
+  onChange={handleInputChange}
+  error={errors.location}
+  required
+/>
+
+  {errors.location && (
+    <p className="text-red-500 text-sm mt-1">
+      {errors.location}
+    </p>
+  )}
+</div>
             </div>
 
             <FormTextarea
@@ -410,11 +510,10 @@ ${formData.businessDescription}`;
                 label="Project Budget Range"
                 name="projectBudget"
                 options={[
-                  "₦80k - ₦150k",
-                  "₦200k - ₦300k",
-                  "₦450k - ₦600k",
-                  "₦700k - ₦1M",
-                  "₦1M+",
+                  "$80 - $150",
+                  "$200 - $300",
+                  "$450 - $600",
+                  "$700 - $1,000",
                 ]}
                 value={formData.projectBudget}
                 onChange={handleInputChange}
@@ -455,6 +554,7 @@ ${formData.businessDescription}`;
           </motion.form>
         </div>
       </section>
+
       <Footer />
     </main>
   );
